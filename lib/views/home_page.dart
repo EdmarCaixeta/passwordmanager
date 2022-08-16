@@ -77,7 +77,32 @@ class HomePage extends StatelessWidget {
                                 IconButton(
                                   icon: Icon(Icons.delete),
                                   onPressed: () {
-                                    db.deletePasswordData(doc.id);
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Are you sure?'),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('Cancel')),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    db.deletePasswordData(
+                                                        doc.id);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text(
+                                                    'Delete',
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  )),
+                                            ],
+                                          );
+                                        });
+                                    //db.deletePasswordData(doc.id);
                                   },
                                 ),
                                 IconButton(
