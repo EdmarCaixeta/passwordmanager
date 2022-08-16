@@ -1,20 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:passwordmanager/controllers/database.dart';
 import 'package:passwordmanager/models/password.dart';
-import 'package:passwordmanager/routes/app_routes.dart';
+import 'package:passwordmanager/views/widgets/cards.dart';
+import 'package:passwordmanager/views/widgets/header.dart';
+
+import '../utils/routes/app_routes.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
-
-  Stream<List<Password>> readPasswords() => FirebaseFirestore.instance
-      .collection('passwords')
-      .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => Password.fromJson(doc.data())).toList());
+  var db = Database();
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +36,9 @@ class HomePage extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  Card(),
-                  Card(),
-                  Card(),
+                  WalletCard(),
+                  NotesCard(),
+                  SafetyCard(),
                 ],
               ),
             ),
@@ -57,7 +53,7 @@ class HomePage extends StatelessWidget {
             ),
             Expanded(
               child: StreamBuilder<List<Password>>(
-                stream: readPasswords(),
+                stream: db.readPasswords(),
                 builder: ((context, snapshot) {
                   if (snapshot.hasError) {
                     return Text('Something went wrong!');
@@ -81,7 +77,7 @@ class HomePage extends StatelessWidget {
                                 IconButton(
                                   icon: Icon(Icons.delete),
                                   onPressed: () {
-                                    deletePasswordData(doc.id);
+                                    db.deletePasswordData(doc.id);
                                   },
                                 ),
                                 IconButton(
@@ -108,53 +104,6 @@ class HomePage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  void deletePasswordData(String id) {
-    final docPassword =
-        FirebaseFirestore.instance.collection('passwords').doc(id).delete();
-  }
-}
-
-class Card extends StatelessWidget {
-  const Card({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-      child: Container(
-        height: 300,
-        width: 200,
-        decoration: BoxDecoration(
-            color: Colors.amber, borderRadius: BorderRadius.circular(10)),
-        child: Text('Hello'),
-      ),
-    );
-  }
-}
-
-class Header extends StatelessWidget {
-  const Header({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('PasswordManager'),
-          Row(
-            children: [Icon(Icons.search), Icon(Icons.settings)],
-          )
-        ],
       ),
     );
   }
