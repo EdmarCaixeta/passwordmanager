@@ -93,17 +93,21 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       if (appnameController.text.isEmpty) {
                         appnameController.text = 'Unnamed Password';
                       }
-                      Navigator.pop(context);
-                    }
 
-                    if (password.id.isEmpty) {
-                      //ID not initialized means registering a new password
-                      db.createPasswordData(appnameController.text,
-                          passwordController.text, usernameController.text);
-                    } else {
-                      //Existent ID means changing password data
-                      db.changePasswordData(password.id, appnameController.text,
-                          passwordController.text, usernameController.text);
+                      if (password.id.isEmpty) {
+                        //ID not initialized means registering a new password
+                        db.createPasswordData(appnameController.text,
+                            passwordController.text, usernameController.text);
+                      } else {
+                        //Existent ID means changing password data
+                        db.changePasswordData(
+                            password.id,
+                            appnameController.text,
+                            passwordController.text,
+                            usernameController.text);
+                      }
+
+                      Navigator.of(context).pop();
                     }
                   },
                   child: Text('Save'))

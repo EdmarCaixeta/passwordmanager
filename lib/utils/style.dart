@@ -5,4 +5,6 @@ var AppThemeData = ThemeData(
     splashColor: walletCardColor,
     primarySwatch: Colors.indigo,
     primaryColor: walletCardColor,
-    textTheme: TextTheme(headline5: TextStyle(color: Colors.black)));
+    textTheme: TextTheme(
+        headline6:
+            TextStyle(color: Colors.black, fontWeight: FontWeight.w300)));

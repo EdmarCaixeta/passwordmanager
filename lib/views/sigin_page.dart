@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordmanager/views/widgets/logo.dart';
 
 class SigninPage extends StatelessWidget {
   final passwordController = TextEditingController();
@@ -13,6 +14,10 @@ class SigninPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              AppLogo(width: 300.0),
+              SizedBox(
+                height: 100,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
