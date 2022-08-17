@@ -7,3 +7,4 @@ Color noteCardColor = Color.fromRGBO(46, 41, 78, 1);
 Color noteCardAccentColor = Colors.white;
 
 Color safetyCardColor = Color.fromRGBO(61, 61, 63, 1);
+

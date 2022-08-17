@@ -48,7 +48,12 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                children: [Text('Passwords')],
+                children: [
+                  Text(
+                    'Passwords',
+                    style: Theme.of(context).textTheme.headline5,
+                  )
+                ],
               ),
             ),
             Expanded(

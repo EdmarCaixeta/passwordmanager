@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordmanager/utils/routes/app_routes.dart';
+import 'package:passwordmanager/utils/style.dart';
 import 'package:passwordmanager/views/home_page.dart';
 import 'package:passwordmanager/views/new_password_page.dart';
 import 'package:passwordmanager/views/settings_page.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppThemeData,
       initialRoute: AppRoutes.AUTH_VERIFICATION,
       routes: {
         AppRoutes.HOME: (context) => HomePage(),

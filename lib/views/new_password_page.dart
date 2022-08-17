@@ -12,6 +12,7 @@ class NewPasswordPage extends StatefulWidget {
 
 class _NewPasswordPageState extends State<NewPasswordPage> {
   final db = Database();
+  final GlobalKey<FormState> _passwordKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final appnameController = TextEditingController();
   final usernameController = TextEditingController();
@@ -56,17 +57,27 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
               Row(
                 children: [
                   Flexible(
-                    child: TextFormField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                          hintText: 'Password', border: OutlineInputBorder()),
+                    child: Form(
+                      key: _passwordKey,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Field is required';
+                          }
+                          return null;
+                        },
+                        controller: passwordController,
+                        decoration: InputDecoration(
+                            hintText: 'Password', border: OutlineInputBorder()),
+                      ),
                     ),
                   ),
                   IconButton(
                       onPressed: () {
-                        passwordController.text =
-                            password.generateRandomString();
-                        setState(() {});
+                        setState(() {
+                          passwordController.text =
+                              password.generateRandomString();
+                        });
                       },
                       icon: Icon(Icons.refresh))
                 ],
@@ -76,6 +87,15 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    if (_passwordKey.currentState!.validate()) {
+                      _passwordKey.currentState!.save();
+
+                      if (appnameController.text.isEmpty) {
+                        appnameController.text = 'Unnamed Password';
+                      }
+                      Navigator.pop(context);
+                    }
+
                     if (password.id.isEmpty) {
                       //ID not initialized means registering a new password
                       db.createPasswordData(appnameController.text,
@@ -85,7 +105,6 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       db.changePasswordData(password.id, appnameController.text,
                           passwordController.text, usernameController.text);
                     }
-                    Navigator.pop(context);
                   },
                   child: Text('Save'))
             ],
