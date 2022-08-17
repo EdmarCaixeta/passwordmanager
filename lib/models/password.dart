@@ -4,7 +4,7 @@ class Password {
   var _random = Random.secure();
 
   String id;
-  final String appname;
+  String appname;
   final String username;
   final String password;
 
