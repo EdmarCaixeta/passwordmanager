@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordmanager/views/widgets/logo.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -13,6 +14,10 @@ class SettingsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
+              AppLogo(width: 200.0),
+              SizedBox(
+                height: 100,
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passwordmanager/utils/routes/app_routes.dart';
+import 'package:passwordmanager/views/widgets/logo.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -13,7 +14,7 @@ class Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('PasswordManager'),
+          AppLogo(width: 150.0),
           Row(
             children: [
               IconButton(
