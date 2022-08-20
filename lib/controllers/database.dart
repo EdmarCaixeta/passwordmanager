@@ -100,6 +100,15 @@ class Database {
         .delete();
   }
 
+  Future deletePaymentCardData(String id) async {
+    await database
+        .collection('users')
+        .doc(user!.uid)
+        .collection('payment-cards')
+        .doc(id)
+        .delete();
+  }
+
   Stream<List<Password>> readPasswords() => FirebaseFirestore.instance
       .collection('users')
       .doc(user?.uid)

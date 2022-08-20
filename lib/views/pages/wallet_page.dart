@@ -14,6 +14,7 @@ class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(AppRoutes.NEW_CREDIT_CARD,
@@ -38,18 +39,7 @@ class WalletPage extends StatelessWidget {
                       controller: _pageController,
                       scrollDirection: Axis.horizontal,
                       children: snapshot.data!.map((doc) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                AppRoutes.NEW_CREDIT_CARD,
-                                arguments: doc);
-                          },
-                          child: PaymentCardWidget(
-                            cardNumber: doc.cardNumber,
-                            expirationDate: doc.expirationDate,
-                            ownerName: doc.ownerName,
-                          ),
-                        );
+                        return PaymentCardWidget(doc: doc);
                       }).toList(),
                     );
                   } else {

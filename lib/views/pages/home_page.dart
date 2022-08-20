@@ -56,87 +56,91 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: StreamBuilder<List<Password>>(
-                stream: db.readPasswords(),
-                builder: ((context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('Something went wrong!');
-                  } else if (snapshot.hasData) {
-                    return ListView(
-                      children: snapshot.data!.map((doc) {
-                        return ListTile(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                AppRoutes.NEW_PASSWORD,
-                                arguments: doc);
-                          },
-                          title: Text(doc.appname),
-                          subtitle: Text(doc.username),
-                          trailing: Container(
-                            width: 100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Are you sure?'),
-                                            actions: [
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('Cancel')),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    db.deletePasswordData(
-                                                        doc.id);
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text(
-                                                    'Delete',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
-                                                  )),
-                                            ],
-                                          );
-                                        });
-                                    //db.deletePasswordData(doc.id);
-                                  },
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.copy),
-                                  onPressed: () {
-                                    Clipboard.setData(
-                                        ClipboardData(text: doc.password));
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text('Text copied!')));
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          leading: CircleAvatar(),
-                        );
-                      }).toList(),
-                    );
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }),
-              ),
+              child: passwordList(),
             )
           ],
         ),
       ),
+    );
+  }
+
+  StreamBuilder<List<Password>> passwordList() {
+    return StreamBuilder<List<Password>>(
+      stream: db.readPasswords(),
+      builder: ((context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!.isEmpty) {
+            return Text(
+              'Empty List',
+              style: TextStyle(fontWeight: FontWeight.w100),
+            );
+          }
+          return ListView(
+            children: snapshot.data!.map((doc) {
+              return passwordListTile(context, doc);
+            }).toList(),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      }),
+    );
+  }
+
+  ListTile passwordListTile(BuildContext context, Password doc) {
+    return ListTile(
+      onTap: () {
+        Navigator.of(context).pushNamed(AppRoutes.NEW_PASSWORD, arguments: doc);
+      },
+      title: Text(doc.appname),
+      subtitle: Text(doc.username),
+      trailing: Container(
+        width: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Are you sure?'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Cancel')),
+                          TextButton(
+                              onPressed: () {
+                                db.deletePasswordData(doc.id);
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.red),
+                              )),
+                        ],
+                      );
+                    });
+                //db.deletePasswordData(doc.id);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.copy),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: doc.password));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('Text copied!')));
+              },
+            ),
+          ],
+        ),
+      ),
+      leading: CircleAvatar(),
     );
   }
 }
