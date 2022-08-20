@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordmanager/utils/routes/app_routes.dart';
 import 'package:passwordmanager/views/widgets/logo.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -25,7 +26,9 @@ class SettingsPage extends StatelessWidget {
                 child: Text('Home'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(AppRoutes.WALLET);
+                },
                 child: Text('Wallet'),
               ),
               TextButton(

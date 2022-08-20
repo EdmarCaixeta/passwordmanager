@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:passwordmanager/utils/color_pallete.dart';
 
+import '../../utils/routes/app_routes.dart';
+
 class WalletCard extends StatelessWidget {
   const WalletCard({
     Key? key,
@@ -11,7 +13,9 @@ class WalletCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(AppRoutes.WALLET);
+        },
         child: Container(
           height: 150,
           width: 130,

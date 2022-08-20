@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordmanager/utils/routes/app_routes.dart';
 import 'package:passwordmanager/utils/style.dart';
-import 'package:passwordmanager/views/home_page.dart';
-import 'package:passwordmanager/views/new_password_page.dart';
-import 'package:passwordmanager/views/settings_page.dart';
-import 'package:passwordmanager/views/sigin_page.dart';
+import 'package:passwordmanager/views/pages/new_credit_card_page.dart';
+import 'package:passwordmanager/views/pages/new_password_page.dart';
+import 'package:passwordmanager/views/pages/settings_page.dart';
+import 'package:passwordmanager/views/pages/sigin_page.dart';
+import 'package:passwordmanager/views/pages/wallet_page.dart';
+
+import 'views/pages/home_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +31,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.SETTINGS: (context) => const SettingsPage(),
         AppRoutes.SIGNIN: ((context) => SigninPage()),
         AppRoutes.AUTH_VERIFICATION: (context) => const AuthVerification(),
+        AppRoutes.WALLET: (context) => WalletPage(),
+        AppRoutes.NEW_CREDIT_CARD: (context) => NewCreditCardPage(),
       },
       debugShowCheckedModeBanner: false,
     );

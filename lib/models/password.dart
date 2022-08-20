@@ -31,7 +31,7 @@ class Password {
 
   int _randomInt(int min, int max) => min + _random.nextInt(max - min);
 
-  String generateRandomString() {
+  String generateSafePassword() {
     const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
     const specialCaracters = '-_\$%!@.,:?';

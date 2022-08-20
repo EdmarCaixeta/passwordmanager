@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:passwordmanager/controllers/database.dart';
 import 'package:passwordmanager/models/password.dart';
+import 'package:passwordmanager/utils/routes/app_routes.dart';
 import 'package:passwordmanager/views/widgets/cards.dart';
 import 'package:passwordmanager/views/widgets/header.dart';
-
-import '../utils/routes/app_routes.dart';
 
 class HomePage extends StatelessWidget {
   var db = Database();
@@ -115,6 +114,9 @@ class HomePage extends StatelessWidget {
                                   onPressed: () {
                                     Clipboard.setData(
                                         ClipboardData(text: doc.password));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text('Text copied!')));
                                   },
                                 ),
                               ],
