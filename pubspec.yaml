@@ -37,6 +37,7 @@ dependencies:
   cloud_firestore:
   firebase_auth:
   easy_mask:
+  encrypt: ^5.0.1
 
 dev_dependencies:
   flutter_test:
