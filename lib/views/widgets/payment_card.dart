@@ -12,16 +12,16 @@ class PaymentCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed(AppRoutes.NEW_CREDIT_CARD, arguments: doc);
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          RotatedBox(
-            quarterTurns: 3,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        RotatedBox(
+          quarterTurns: 3,
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(AppRoutes.NEW_CREDIT_CARD, arguments: doc);
+            },
             child: Container(
                 width: 450,
                 height: 280,
@@ -92,8 +92,8 @@ class PaymentCardWidget extends StatelessWidget {
                   ],
                 )),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
