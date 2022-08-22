@@ -31,6 +31,30 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
     }
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (_passwordKey.currentState!.validate()) {
+            _passwordKey.currentState!.save();
+
+            if (appnameController.text.isEmpty) {
+              appnameController.text = 'Unnamed Password';
+            }
+
+            if (password.id.isEmpty) {
+              //ID not initialized means registering a new password
+              db.createPasswordData(appnameController.text,
+                  passwordController.text, usernameController.text);
+            } else {
+              //Existent ID means changing password data
+              db.changePasswordData(password.id, appnameController.text,
+                  passwordController.text, usernameController.text);
+            }
+
+            Navigator.of(context).pop();
+          }
+        },
+        child: Icon(Icons.save),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -74,10 +98,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   ),
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          passwordController.text =
-                              password.generateRandomString();
-                        });
+                        passwordController.clear();
+                        passwordController.text =
+                            password.generateSafePassword();
                       },
                       icon: Icon(Icons.refresh))
                 ],
@@ -85,28 +108,6 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    if (_passwordKey.currentState!.validate()) {
-                      _passwordKey.currentState!.save();
-
-                      if (appnameController.text.isEmpty) {
-                        appnameController.text = 'Unnamed Password';
-                      }
-                      Navigator.pop(context);
-                    }
-
-                    if (password.id.isEmpty) {
-                      //ID not initialized means registering a new password
-                      db.createPasswordData(appnameController.text,
-                          passwordController.text, usernameController.text);
-                    } else {
-                      //Existent ID means changing password data
-                      db.changePasswordData(password.id, appnameController.text,
-                          passwordController.text, usernameController.text);
-                    }
-                  },
-                  child: Text('Save'))
             ],
           ),
         ),
